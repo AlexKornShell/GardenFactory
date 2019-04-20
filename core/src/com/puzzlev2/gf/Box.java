@@ -34,7 +34,7 @@ public class Box extends Actor {
     }
 
     @Override
-    public void act (float delta) {
+    public void act(float delta) {
 
     }
 

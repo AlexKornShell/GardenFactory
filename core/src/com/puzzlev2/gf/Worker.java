@@ -43,8 +43,8 @@ public class Worker extends Actor {
     }
 
     @Override
-    public void act (float delta) {
-        if(iterate && coords != null && i < coords.size()) {
+    public void act(float delta) {
+        if (iterate && coords != null && i < coords.size()) {
             x = coords.get(i).x;
             y = coords.get(i).y;
             circle.setPosition(x - width / 2, y - height / 2);

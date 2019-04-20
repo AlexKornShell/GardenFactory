@@ -27,14 +27,14 @@ public class Player extends Actor {
     }
 
     @Override
-    public void act (float delta) {
-        if(isGarden) sgarden.act();
+    public void act(float delta) {
+        if (isGarden) sgarden.act();
         else sfactory.act();
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-        if(isGarden) sgarden.draw();
+        if (isGarden) sgarden.draw();
         else sfactory.draw();
     }
 

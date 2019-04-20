@@ -35,21 +35,20 @@ public class Factory extends Actor {
     }
 
     @Override
-    public void act (float delta) {
-        generate();
+    public void act(float delta) {
         for (Worker w1 : workers) {
             for (Worker w2 : workers) {
-                if(w1 != w2 && Intersector.overlaps(w1.circle, w2.circle)) {
+                if (w1 != w2 && Intersector.overlaps(w1.circle, w2.circle)) {
                     float damage = w1.strength;
-                    w1.strength -= w2.strength * 0.1f;
-                    w2.strength -= damage * 0.1f;
+                    w1.strength -= w2.strength * 0.01f;
+                    w2.strength -= damage * 0.01f;
                 }
             }
         }
 
         for (Worker w : workers) {
             for (Box b : boxes) {
-                if(Intersector.overlaps(w.circle, b.rectangle)) {
+                if (Intersector.overlaps(w.circle, b.rectangle)) {
                     float toLoad = b.strength - b.load;
                     if (toLoad <= w.load) {
                         w.load -= toLoad;
@@ -71,10 +70,10 @@ public class Factory extends Actor {
 
     public void generate() {
         Random random = new Random();
-        if(random.nextInt(100) == 1) {
-        //    Base b = new Base(random.nextInt(1000), random.nextInt(1000), 95, 100, 1, 1);
-        //    gbases.addActor(b);
-        //    bases.add(b);
+        if (random.nextInt(100) == 1) {
+            //    Base b = new Base(random.nextInt(1000), random.nextInt(1000), 95, 100, 1, 1);
+            //    gbases.addActor(b);
+            //    bases.add(b);
         }
     }
 }
