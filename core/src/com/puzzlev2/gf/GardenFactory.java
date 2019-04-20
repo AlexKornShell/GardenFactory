@@ -148,17 +148,11 @@ public class GardenFactory extends ApplicationAdapter {
     public void draw() {
         if (Gdx.input.isTouched()) {
 
-            if (Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200 && returned) {
+            if (Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200) {
                 if (!coordSet.isEmpty()) {
-                    //	player.setCoords(coordSet);
-                    coordSet.clear();
+                    player.setCoords(coordSet);
                     isDrawing = false;
                 }
-                if (coordSet.isEmpty()) drawTragect = true;
-
-            } else {
-                if (coordSet.isEmpty()) drawTragect = false;
-                else returned = true;
             }
 
             if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0)) {

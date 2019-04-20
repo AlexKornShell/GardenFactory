@@ -12,7 +12,7 @@ public class Player extends Actor {
     private Stage sgarden;
     private Stage sfactory;
     public boolean isGarden;
-    ArrayList<Coordinate> coords;
+
 
     public int openedColors;
     public int happiness;
@@ -44,7 +44,8 @@ public class Player extends Actor {
     }
 
     public void setCoords(ArrayList<Coordinate> coords) {
-        this.coords = coords;
+        if (isGarden) factory.workers.get(0).coords = coords;//sgarden.draw();
+        else factory.workers.get(0).coords = coords;
     }
 
     public void gardenStep() {

@@ -14,7 +14,7 @@ public class Factory extends Actor {
     private float height;
     private ArrayList<Base> bases;
     private ArrayList<Box> boxes;
-    private ArrayList<Worker> workers;
+    ArrayList<Worker> workers;
 
     private Group gbases;
     private Group gboxes;
@@ -28,10 +28,14 @@ public class Factory extends Actor {
         bases = new ArrayList<Base>();
         boxes = new ArrayList<Box>();
         workers = new ArrayList<Worker>();
+        Worker worker = new Worker(20, 20, 28, 42, 21, 100, 1, 1);
+        workers.add(worker);
 
         gbases = new Group();
         gboxes = new Group();
         gworkers = new Group();
+
+        gworkers.addActor(worker);
 
         this.generate(10, 100);
     }
@@ -56,14 +60,17 @@ public class Factory extends Actor {
 
         for (Worker w : workers) {
             for (Box b : boxes) {
-                if (Intersector.overlaps(w.circle, b.rectangle)) {
+                if (w.color == b.color && Intersector.overlaps(w.circle, b.rectangle)) {
+                    System.out.println(b.color + b.rectangle.getX());
                     float toLoad = b.strength - b.load;
-                    if (toLoad <= w.load) {
-                        w.load -= toLoad;
-                        b.load += toLoad;
-                    } else {
-                        b.load += w.load;
-                        w.load -= w.load;
+                    if (toLoad > 0) {
+                        if (toLoad <= w.load) {
+                            w.load -= toLoad;
+                            b.load += toLoad;
+                        } else {
+                            b.load += w.load;
+                            w.load -= w.load;
+                        }
                     }
                 }
             }
