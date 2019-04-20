@@ -16,6 +16,8 @@ public class GardenFactory extends ApplicationAdapter {
 	Texture img;
 	Stage stage;
 	boolean drawTragect;
+	boolean isDrawing;
+	Player player;
 
 	Set <Coordinate> coordSet = new HashSet<Coordinate>();
 
@@ -24,7 +26,7 @@ public class GardenFactory extends ApplicationAdapter {
 		stage = new Stage();
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		Player player = new Player(stage);
+		player = new Player(stage);
 		stage.addActor(player);
 	}
 
@@ -32,39 +34,34 @@ public class GardenFactory extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		stage.act();
 		stage.draw();
 
-		batch.begin();
-		batch.draw(img, 0, 0, 200, 200);
-		batch.end();
-
-		for(Coordinate c : coordSet) {
-			batch.begin();
-			batch.draw(img, c.x, c.y, 10, 10);
-			batch.end();
-		}
-
-		if(Gdx.input.isTouched()) {
-
-            if(Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200){
-				if(!coordSet.isEmpty()) coordSet.clear();
-            	if(coordSet.isEmpty()) drawTragect = true;
-
-
-			}else {
-            	if (coordSet.isEmpty())drawTragect = false;
+		if (isDrawing) {
+			for (Coordinate c : coordSet) {
+				batch.begin();
+				batch.draw(img, c.x, c.y, 10, 10);
+				batch.end();
 			}
 
-            if((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0) && drawTragect){
+			if (Gdx.input.isTouched()) {
+
+				if (Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200) {
+					if (!coordSet.isEmpty()) coordSet.clear();
+					if (coordSet.isEmpty()) drawTragect = true;
+
+				} else {
+					if (coordSet.isEmpty()) drawTragect = false;
+				}
+
+				if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0)) {
 					coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
-			}
+				}
 
-            System.out.println("X: " + Gdx.input.getX()+" Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
-        }else coordSet.clear();
-
-
-
+				System.out.println("X: " + Gdx.input.getX() + " Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
+			} else coordSet.clear();
+		}
 		
 	}
 	

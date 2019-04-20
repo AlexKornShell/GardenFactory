@@ -12,13 +12,15 @@ public class Player extends Actor {
     private boolean isGarden;
 
     public Player(Stage stage) {
-        isGarden = false;
+        isGarden = true;
         sgarden = new Stage();
         sfactory = new Stage();
-        garden = new Garden(sgarden);
-        factory = new Factory(sfactory);
+        garden = new Garden(this);
+        factory = new Factory();
         sgarden.addActor(garden);
         sfactory.addActor(factory);
+        garden.setGroups(sgarden);
+        factory.setGroups(sfactory);
     }
 
     @Override

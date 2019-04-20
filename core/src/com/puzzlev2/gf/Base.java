@@ -13,14 +13,18 @@ public class Base extends Actor {
     private float height;
     private float width;
 
+    int color;
     private TextureRegion base;
 
-    public Base(float x, float y, float width, float height) {
+    public Base(float x, float y, float width, float height, int color, int type) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        base = new TextureRegion(new Texture(Gdx.files.internal("car2.png")), 0, 0, 22, 48);
+        String file;
+        if (type == 0) file = "hive" + color + ".png";
+        else file = "door" + color + ".png";
+        base = new TextureRegion(new Texture(Gdx.files.internal(file)), 0, 0, 95, 100);
 
     }
 
@@ -31,6 +35,6 @@ public class Base extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(base, x, y, width / 2, height / 2, width, height, width / 22f, height / 48f, 0);
+        batch.draw(base, x, y, width / 2, height / 2, width, height, 1, 1, 0);
     }
 }
