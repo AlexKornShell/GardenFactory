@@ -7,11 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class GardenFactory extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	Stage stage;
-	
+	boolean drawTragect;
+
+	Set <Coordinate> coordSet = new HashSet<Coordinate>();
+
 	@Override
 	public void create () {
 		stage = new Stage();
@@ -23,19 +29,49 @@ public class GardenFactory extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		stage.act();
 		stage.draw();
 
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, 0, 0, 200, 200);
 		batch.end();
+
+		for(Coordinate c : coordSet) {
+			batch.begin();
+			batch.draw(img, c.x, c.y, 10, 10);
+			batch.end();
+		}
+
+		if(Gdx.input.isTouched()) {
+
+            if(Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200){
+				if(coordSet.isEmpty()) drawTragect = true;
+                if(!coordSet.isEmpty()) coordSet.clear();
+
+			}else {
+            	if (coordSet.isEmpty())drawTragect = false;
+			}
+
+            if((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0) && drawTragect){
+					coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
+			}
+
+            System.out.println("X: " + Gdx.input.getX()+" Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
+        }else coordSet.clear();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+	}
+
+	public Integer invertCoord(Integer coord){
+		int screenSize = 1800;
+
+		return screenSize - coord;
 	}
 }
