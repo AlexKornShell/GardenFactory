@@ -22,6 +22,10 @@ public class Factory extends Actor {
         boxes = new ArrayList<Box>();
         workers = new ArrayList<Worker>();
 
+        gbases = new Group();
+        gboxes = new Group();
+        gworkers = new Group();
+
         for (Base base : bases) {
             gbases.addActor(base);
         }
@@ -39,7 +43,7 @@ public class Factory extends Actor {
 
     @Override
     public void act (float delta) {
-
+        generate();
     }
 
     @Override
@@ -49,8 +53,8 @@ public class Factory extends Actor {
 
     public void generate() {
         Random random = new Random();
-        if(random.nextInt(10000) == 1) {
-            Base b = new Base(1, 1, 1, 1);
+        if(random.nextInt(100) == 1) {
+            Base b = new Base(random.nextInt(1000), random.nextInt(1000), 22, 48);
             gbases.addActor(b);
             bases.add(b);
         }

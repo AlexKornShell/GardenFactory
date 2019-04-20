@@ -19,7 +19,7 @@ public class Box extends Actor {
         this.y = y;
         this.width = width;
         this.height = height;
-        base = new TextureRegion(new Texture(Gdx.files.internal("core/assets/car2.png")), 0, 0, 22, 48);
+        base = new TextureRegion(new Texture(Gdx.files.internal("car2.png")), 0, 0, 22, 48);
 
     }
 
