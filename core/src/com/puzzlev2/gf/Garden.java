@@ -22,14 +22,18 @@ public class Garden extends Actor {
         bees = new ArrayList<Worker>();
 
         for (Base hive : hives) {
-            stage.addActor(hive);
+            ghives.addActor(hive);
         }
         for (Box flower : flowers) {
-            stage.addActor(flower);
+            gflowers.addActor(flower);
         }
         for (Worker bee : bees) {
-            stage.addActor(bee);
+            gbees.addActor(bee);
         }
+
+        stage.addActor(ghives);
+        stage.addActor(gflowers);
+        stage.addActor(gbees);
     }
 
     @Override

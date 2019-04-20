@@ -7,21 +7,28 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Player extends Actor {
     private Garden garden;
     private Factory factory;
+    private Stage sgarden;
+    private Stage sfactory;
+    private boolean isGarden;
 
     public Player(Stage stage) {
-        garden = new Garden(stage);
-        factory = new Factory(stage);
-        stage.addActor(garden);
-        stage.addActor(factory);
+        sgarden = new Stage();
+        sfactory = new Stage();
+        garden = new Garden(sgarden);
+        factory = new Factory(sfactory);
+        sgarden.addActor(garden);
+        sfactory.addActor(factory);
     }
 
     @Override
     public void act (float delta) {
-
+        if(isGarden) sgarden.act();
+        else sfactory.act();
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-
+        if(isGarden) sgarden.draw();
+        else sfactory.draw();
     }
 }
