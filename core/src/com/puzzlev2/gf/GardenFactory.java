@@ -34,6 +34,8 @@ public class GardenFactory extends ApplicationAdapter {
     Texture tgmorning;
     Texture tgevening;
 
+    boolean returned;
+
     ArrayList<Coordinate> coordSet = new ArrayList<Coordinate>();
 
     @Override
@@ -49,14 +51,16 @@ public class GardenFactory extends ApplicationAdapter {
         tgmorning = new Texture("badlogic.jpg");
         tgevening = new Texture("badlogic.jpg");
 
-		stage.addActor(player);
+        stage.addActor(player);
 
         fmorning = true;
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        if (garden) Gdx.gl.glClearColor(0, 1, 0, 1);
+        else if (factory) Gdx.gl.glClearColor(128 / 255f, 128 / 255f, 128 / 255f, 1);
+        else Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (fmorning) {
@@ -73,7 +77,8 @@ public class GardenFactory extends ApplicationAdapter {
                 player.factoryStep();
                 isGenerating = false;
             } else if (isDrawing) {
-                isDrawing = false;
+                draw();
+                //isDrawing = false;
             } else {
                 stage.act();
                 if (Gdx.input.justTouched()) {
@@ -84,6 +89,7 @@ public class GardenFactory extends ApplicationAdapter {
                 }
             }
             stage.draw();
+            drawTrack();
         } else if (fevening) {
             batch.begin();
             batch.draw(tfevening, 0, 0);
@@ -127,41 +133,40 @@ public class GardenFactory extends ApplicationAdapter {
             }
         }
 
-/*
-	//	if (!coordSet.isEmpty()) {
-		batch.begin();
-			for (Coordinate c : coordSet) {
-				batch.draw(tfmorning, c.x, c.y, 10, 10);
-			}
-		batch.end();
-	//	}
+    }
 
-		if (isDrawing) {
-			if (Gdx.input.isTouched()) {
+    public void drawTrack() {
+        if (!coordSet.isEmpty()) {
+            batch.begin();
+            for (Coordinate c : coordSet) {
+                batch.draw(tfmorning, c.x, c.y, 10, 10);
+            }
+            batch.end();
+        }
+    }
 
-				if (Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200) {
-					if (!coordSet.isEmpty()) {
-					//	player.setCoords(coordSet);
-					//	coordSet.clear();
-						isDrawing = false;
-					}
-					if (coordSet.isEmpty()) drawTragect = true;
+    public void draw() {
+        if (Gdx.input.isTouched()) {
 
-				} else {
-					if (coordSet.isEmpty()) drawTragect = false;
-				}
+            if (Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200 && returned) {
+                if (!coordSet.isEmpty()) {
+                    //	player.setCoords(coordSet);
+                    coordSet.clear();
+                    isDrawing = false;
+                }
+                if (coordSet.isEmpty()) drawTragect = true;
 
-				if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0)) {
-					coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
-				}
+            } else {
+                if (coordSet.isEmpty()) drawTragect = false;
+                else returned = true;
+            }
 
-				System.out.println("X: " + Gdx.input.getX() + " Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
-			} else coordSet.clear();
-		} else if (!coordSet.isEmpty()) {
-			coordSet.clear();
-		}
-		*/
+            if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0)) {
+                coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
+            }
 
+            System.out.println("X: " + Gdx.input.getX() + " Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
+        } else coordSet.clear();
     }
 
     @Override
