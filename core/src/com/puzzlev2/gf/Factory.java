@@ -35,6 +35,10 @@ public class Factory extends Actor {
         gboxes = new Group();
         gworkers = new Group();
 
+        Base base = new Base(width / 2f - (95 / 2f), 0, 95, 100, 1, 1);
+        bases.add(base);
+        gworkers.addActor(base);
+
         gworkers.addActor(worker);
 
         this.generate(10, 100);
@@ -111,8 +115,11 @@ public class Factory extends Actor {
                 int boxWidth = 48;
                 int boxHeight = 28;
 
-                float x = random.nextFloat() *(width - boxWidth);
-                float y = random.nextFloat() * (height - boxHeight);
+                float fieldWidth = 0.8f * width;
+                float fieldHeight = 0.8f * height;
+
+                float x = random.nextFloat() *(fieldWidth - boxWidth) + 0.1f * width;
+                float y = random.nextFloat() * (fieldHeight - boxHeight) + 0.1f * height;
 
                 Box b = new Box(random.nextInt(this.player.openedColors) + 1, 90, x, y, boxWidth, boxHeight, 1);
                 gboxes.addActor(b);
