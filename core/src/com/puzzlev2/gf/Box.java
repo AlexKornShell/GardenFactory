@@ -28,8 +28,8 @@ public class Box extends Actor {
         this.height = height;
         rectangle = new Rectangle(x, y, width, height);
         String file;
-        if (type == 0) file = "flower" + width + "" + color + ".png";
-        else file = "box" + width + "" + color + ".png";
+        if (type == 0) file = "flower" + (int) width + "" + color + ".png";
+        else file = "box" + (int) width + "" + color + ".png";
         base = new TextureRegion(new Texture(Gdx.files.internal(file)), 0, 0, width, height);
     }
 
