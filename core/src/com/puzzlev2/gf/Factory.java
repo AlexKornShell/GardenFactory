@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Factory extends Actor {
+    private float width;
+    private float height;
     private ArrayList<Base> bases;
     private ArrayList<Box> boxes;
     private ArrayList<Worker> workers;
@@ -17,8 +19,12 @@ public class Factory extends Actor {
     private Group gbases;
     private Group gboxes;
     private Group gworkers;
+    private Player player;
 
-    public Factory() {
+    public Factory(Player player, float width, float height) {
+        this.player = player;
+        this.width = width;
+        this.height = height;
         bases = new ArrayList<Base>();
         boxes = new ArrayList<Box>();
         workers = new ArrayList<Worker>();
@@ -26,6 +32,8 @@ public class Factory extends Actor {
         gbases = new Group();
         gboxes = new Group();
         gworkers = new Group();
+
+        this.generate(10, 100);
     }
 
     public void setGroups(Stage stage) {
@@ -68,12 +76,41 @@ public class Factory extends Actor {
 
     }
 
-    public void generate() {
+
+    private void killFlowers() {
+        int len = boxes.size();
+        for (int i = 0; i < len; i++) {
+            Box flower = boxes.get(i);
+            if (flower.load <= 1f) {
+                gboxes.removeActor(flower);
+                boxes.remove(flower);
+                len -= 1;
+            }
+        }
+    }
+
+    public void updateState() {
+        int flowerCount = this.boxes.size();
+        killFlowers();
+        this.player.happiness *= flowerCount / this.boxes.size();
+        generate((int) Math.floor((double) 3 * this.player.happiness / 100), this.player.happiness);
+    }
+
+    private void generate(int maxCount, int prob) {
         Random random = new Random();
-        if (random.nextInt(100) == 1) {
-            //    Base b = new Base(random.nextInt(1000), random.nextInt(1000), 95, 100, 1, 1);
-            //    gbases.addActor(b);
-            //    bases.add(b);
+
+        for (int i = 0; i < maxCount; i++) {
+            if (random.nextInt(100) <= prob) {
+                int boxWidth = 48;
+                int boxHeight = 28;
+
+                float x = random.nextFloat() *(width - boxWidth);
+                float y = random.nextFloat() * (height - boxHeight);
+
+                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 90, x, y, boxWidth, boxHeight, 1);
+                gboxes.addActor(b);
+                boxes.add(b);
+            }
         }
     }
 }

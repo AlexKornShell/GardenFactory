@@ -42,14 +42,14 @@ public class GardenFactory extends ApplicationAdapter {
         isGenerating = true;
         stage = new Stage();
         batch = new SpriteBatch();
+        player = new Player(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         tfmorning = new Texture("badlogic.jpg");
         tfevening = new Texture("badlogic.jpg");
         tgmorning = new Texture("badlogic.jpg");
         tgevening = new Texture("badlogic.jpg");
 
-        player = new Player(stage);
-        stage.addActor(player);
+		stage.addActor(player);
 
         fmorning = true;
     }
@@ -69,6 +69,7 @@ public class GardenFactory extends ApplicationAdapter {
             }
         } else if (factory) {
             if (isGenerating) {
+                player.isGarden = false;
                 player.factoryStep();
                 isGenerating = false;
             } else if (isDrawing) {
@@ -89,7 +90,7 @@ public class GardenFactory extends ApplicationAdapter {
             batch.end();
             if (Gdx.input.justTouched()) {
                 fevening = false;
-                gmorning = true;
+                fmorning = true; // Todo
             }
         } else if (gmorning) {
             batch.begin();
@@ -101,6 +102,7 @@ public class GardenFactory extends ApplicationAdapter {
             }
         } else if (garden) {
             if (isGenerating) {
+                player.isGarden = true;
                 player.gardenStep();
                 isGenerating = false;
             } else if (isDrawing) {

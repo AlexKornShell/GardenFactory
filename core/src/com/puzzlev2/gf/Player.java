@@ -11,15 +11,20 @@ public class Player extends Actor {
     private Factory factory;
     private Stage sgarden;
     private Stage sfactory;
-    private boolean isGarden;
+    public boolean isGarden;
     ArrayList<Coordinate> coords;
 
-    public Player(Stage stage) {
-        isGarden = true;
+    public int openedColors;
+    public int happiness;
+
+    public Player(float width, float height) {
+        this.openedColors = 3;
+        this.happiness = 50;
+        isGarden = false;
         sgarden = new Stage();
         sfactory = new Stage();
-        garden = new Garden(this);
-        factory = new Factory();
+        garden = new Garden(this, width, height);
+        factory = new Factory(this, width, height);
         sgarden.addActor(garden);
         sfactory.addActor(factory);
         garden.setGroups(sgarden);
@@ -43,10 +48,10 @@ public class Player extends Actor {
     }
 
     public void gardenStep() {
-        garden.generate();
+        garden.updateState();
     }
 
     public void factoryStep() {
-        factory.generate();
+        factory.updateState();
     }
 }
