@@ -12,6 +12,7 @@ public class Player extends Actor {
     private boolean isGarden;
 
     public Player(Stage stage) {
+        isGarden = false;
         sgarden = new Stage();
         sfactory = new Stage();
         garden = new Garden(sgarden);

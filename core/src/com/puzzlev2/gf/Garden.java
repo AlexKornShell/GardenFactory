@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Garden extends Actor {
     private ArrayList<Base> hives;
@@ -21,6 +22,10 @@ public class Garden extends Actor {
         flowers = new ArrayList<Box>();
         bees = new ArrayList<Worker>();
 
+        ghives = new Group();
+        gflowers = new Group();
+        gbees = new Group();
+
         for (Base hive : hives) {
             ghives.addActor(hive);
         }
@@ -34,6 +39,7 @@ public class Garden extends Actor {
         stage.addActor(ghives);
         stage.addActor(gflowers);
         stage.addActor(gbees);
+
     }
 
     @Override
@@ -44,5 +50,14 @@ public class Garden extends Actor {
     @Override
     public void draw(Batch batch, float alpha) {
 
+    }
+
+    public void generate() {
+        Random random = new Random();
+        if(random.nextInt(100) == 1) {
+            Base b = new Base(random.nextInt(1000), random.nextInt(1000), 22, 48);
+            ghives.addActor(b);
+            hives.add(b);
+        }
     }
 }
