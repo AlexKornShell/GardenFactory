@@ -2,6 +2,7 @@ package com.puzzlev2.gf;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -47,8 +48,9 @@ public class GardenFactory extends ApplicationAdapter {
 		if(Gdx.input.isTouched()) {
 
             if(Gdx.input.getX() < 200 && invertCoord(Gdx.input.getY()) < 200){
-				if(coordSet.isEmpty()) drawTragect = true;
-                if(!coordSet.isEmpty()) coordSet.clear();
+				if(!coordSet.isEmpty()) coordSet.clear();
+            	if(coordSet.isEmpty()) drawTragect = true;
+
 
 			}else {
             	if (coordSet.isEmpty())drawTragect = false;
@@ -60,6 +62,10 @@ public class GardenFactory extends ApplicationAdapter {
 
             System.out.println("X: " + Gdx.input.getX()+" Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
         }else coordSet.clear();
+
+
+
+		
 	}
 	
 	@Override
@@ -69,7 +75,7 @@ public class GardenFactory extends ApplicationAdapter {
 	}
 
 	public Integer invertCoord(Integer coord){
-		int screenSize = 1800;
+		int screenSize = Gdx.graphics.getHeight();
 
 		return screenSize - coord;
 	}
