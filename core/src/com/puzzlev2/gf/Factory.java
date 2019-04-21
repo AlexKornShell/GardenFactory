@@ -82,6 +82,11 @@ public class Factory extends Actor {
     }
 
     private void basicPositions(){
+        workers.clear();
+        gworkers.clear();
+        bases.clear();
+        gbases.clear();
+
         for (int i = 1; i <= this.player.openedColors; i++) {
             int x, y;
             switch (i) {
