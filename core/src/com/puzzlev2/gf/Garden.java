@@ -14,7 +14,7 @@ public class Garden extends Actor {
     private float height;
     private ArrayList<Base> bases;
     private ArrayList<Box> boxes;
-    private ArrayList<Worker> workers;
+    ArrayList<Worker> workers;
 
     private Group gbases;
     private Group gboxes;
@@ -26,7 +26,6 @@ public class Garden extends Actor {
 
 
     public Garden(Player player, float width, float height) {
-        isDrawing = false;
         this.width = width;
         this.height = height;
         this.player = player;
@@ -38,6 +37,8 @@ public class Garden extends Actor {
         gboxes = new Group();
         gworkers = new Group();
 
+        this.basicPositions();
+
         this.generate(3, 100);
     }
 
@@ -48,28 +49,25 @@ public class Garden extends Actor {
     }
 
     @Override
-    public void act (float delta) {
-        if (!isDrawing) {
-
-        } else if (isDrawing) {
-
-        } else if (!isMoving) {
-
-        } else {
-            for (Worker w1 : workers) {
-                for (Worker w2 : workers) {
-                    if (w1 != w2 && w1.color != w2.color && Intersector.overlaps(w1.circle, w2.circle)) {
+    public void act(float delta) {
+        for (Worker w1 : workers) {
+            for (Worker w2 : workers) {
+                if (w1 != w2 && Intersector.overlaps(w1.circle, w2.circle)) {
+                    if (w1.strength > 0 && w2.strength > 0) {
                         float damage = w1.strength;
-                        w1.strength -= w2.strength * 0.1f;
-                        w2.strength -= damage * 0.1f;
+                        w1.strength -= w2.strength * 0.01f;
+                        w2.strength -= damage * 0.01f;
                     }
                 }
             }
+        }
 
-            for (Worker w : workers) {
-                for (Box b : boxes) {
-                    if (Intersector.overlaps(w.circle, b.rectangle) && w.color == b.color) {
-                        float toLoad = b.strength - b.load;
+        for (Worker w : workers) {
+            for (Box b : boxes) {
+                if (w.color == b.color && Intersector.overlaps(w.circle, b.rectangle)) {
+                    System.out.println(b.color + b.rectangle.getX());
+                    float toLoad = b.strength - b.load;
+                    if (toLoad > 0) {
                         if (toLoad <= w.load) {
                             w.load -= toLoad;
                             b.load += toLoad;
@@ -81,6 +79,7 @@ public class Garden extends Actor {
                 }
             }
         }
+
     }
 
     @Override
@@ -88,6 +87,40 @@ public class Garden extends Actor {
 
     }
 
+    private void basicPositions(){
+        workers.clear();
+        gworkers.clear();
+        bases.clear();
+        gbases.clear();
+
+        for (int i = 1; i <= this.player.openedColors; i++) {
+            int x, y;
+            switch (i) {
+                case (1):
+                    x = (int) (width / 2f - (95 / 2f));
+                    y = 0;
+                    break;
+                case (2):
+                    x = 0;
+                    y = (int) (height / 2f - (100 / 2f));
+                    break;
+                case (3):
+                    x = (int) (width - 95);
+                    y = (int) (height / 2f - (100 / 2f));
+                    break;
+                default:
+                    x = 0;
+                    y = 0;
+                    break;
+            }
+            Worker worker = new Worker(x, y, 28, 42, 21, 100,  i, 0);
+            Base base = new Base(x, y, 95, 100, i, 0);
+            workers.add(worker);
+            gworkers.addActor(worker);
+            bases.add(base);
+            gbases.addActor(base);
+        }
+    }
 
     private void killFlowers() {
         int len = boxes.size();
@@ -102,6 +135,7 @@ public class Garden extends Actor {
     }
 
     public void updateState() {
+        this.basicPositions();
         int flowerCount = this.boxes.size();
         killFlowers();
         this.player.happiness *= flowerCount / this.boxes.size();
@@ -120,10 +154,13 @@ public class Garden extends Actor {
                     flowerHeight = 48;
                 }
 
-                float x = random.nextFloat() *(width - flowerWidth);
-                float y = random.nextFloat() * (height - flowerHeight);
+                float fieldWidth = width - 200;
+                float fieldHeight = height - 300;
 
-                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 90, 100, x, y, flowerWidth, flowerHeight, 0);
+                float x = random.nextFloat() * (fieldWidth - flowerWidth) + 100;
+                float y = random.nextFloat() * (fieldHeight - flowerHeight) + 100;
+
+                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 10, 100, x, y, flowerWidth, flowerHeight, 0);
                 gboxes.addActor(b);
                 boxes.add(b);
             }

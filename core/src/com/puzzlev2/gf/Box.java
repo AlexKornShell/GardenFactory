@@ -31,7 +31,7 @@ public class Box extends Actor {
         this.load = load;
         this.strength = strength;
         this.color = color;
-        rectangle = new Rectangle(x, y, width, height);
+        rectangle = new Rectangle(x, y, 1.5f * width, 1.5f * height);
         String file;
         if (type == 0) file = "flower" + width + "" + color + ".png";
         else file = "box" + color + ".png";

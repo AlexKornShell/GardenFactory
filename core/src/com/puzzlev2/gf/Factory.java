@@ -12,8 +12,8 @@ import java.util.Random;
 public class Factory extends Actor {
     private float width;
     private float height;
-    private ArrayList<Base> bases;
-    private ArrayList<Box> boxes;
+    ArrayList<Base> bases;
+    ArrayList<Box> boxes;
     ArrayList<Worker> workers;
 
     private Group gbases;
@@ -49,9 +49,11 @@ public class Factory extends Actor {
         for (Worker w1 : workers) {
             for (Worker w2 : workers) {
                 if (w1 != w2 && Intersector.overlaps(w1.circle, w2.circle)) {
-                    float damage = w1.strength;
-                    w1.strength -= w2.strength * 0.01f;
-                    w2.strength -= damage * 0.01f;
+                    if (w1.strength > 0 && w2.strength > 0) {
+                        float damage = w1.strength;
+                        w1.strength -= w2.strength * 0.01f;
+                        w2.strength -= damage * 0.01f;
+                    }
                 }
             }
         }

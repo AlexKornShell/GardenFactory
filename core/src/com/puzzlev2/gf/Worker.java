@@ -21,7 +21,7 @@ public class Worker extends Actor {
     float strength;
     int load;
     boolean iterate;
-    int i;
+    float i;
     ArrayList<Coordinate> coords;
 
     Circle circle;
@@ -34,10 +34,11 @@ public class Worker extends Actor {
         this.width = width;
         this.height = height;
         this.r = r;
+        this.strength = load;
         this.load = load;
         this.color = color;
         circle = new Circle();
-        circle.setRadius(r);
+        circle.setRadius(1.5f * r);
         circle.setPosition(x - width / 2, y - height / 2);
         String file;
         if (type == 0) file = "bee" + color + ".png";
@@ -49,10 +50,10 @@ public class Worker extends Actor {
     @Override
     public void act(float delta) {
         if (coords != null && i < coords.size()) {
-            x = coords.get(i).x;
-            y = coords.get(i).y;
+            x = coords.get((int) i).x;
+            y = coords.get((int) i).y;
             circle.setPosition(x - width / 2, y - height / 2);
-            i++;
+            i+=0.25;
         } else if (coords != null && i == coords.size()) {
             i = 0;
             coords = null;
@@ -62,8 +63,8 @@ public class Worker extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(base, x, y, width / 2, height / 2, width, height, 1, 1, 0);
-        font.draw(batch, "" + load, x, y - 1);
+        batch.draw(base, x, y, width / 2, height / 2, 1.5f * width, 1.5f * height, 1.5f, 1.5f, 0);
+        font.draw(batch, "" + load + "/" + (int) strength, x, y - 1);
     }
 
     public void update(float damage) {

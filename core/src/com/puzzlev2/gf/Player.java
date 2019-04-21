@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import java.util.ArrayList;
 
 public class Player extends Actor {
-    private Garden garden;
-    private Factory factory;
+    Garden garden;
+    Factory factory;
     private Stage sgarden;
     private Stage sfactory;
     public boolean isGarden;
@@ -43,9 +43,9 @@ public class Player extends Actor {
         else sfactory.draw();
     }
 
-    public void setCoords(ArrayList<Coordinate> coords) {
-        if (isGarden) factory.workers.get(0).coords = coords;//sgarden.draw();
-        else factory.workers.get(0).coords = coords;
+    public void setCoords(ArrayList<Coordinate> coords, int k) {
+        if (isGarden) garden.workers.get(k).coords = coords;//sgarden.draw();
+        else factory.workers.get(k).coords = coords;
     }
 
     public void gardenStep() {
