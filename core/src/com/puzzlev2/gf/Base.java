@@ -26,7 +26,8 @@ public class Base extends Actor {
         rectangle = new Rectangle(x, y, width, height);
         String file;
         if (type == 0) file = "hive" + color + ".png";
-        else file = "door" + color + ".png";
+        //else file = "door" + color + ".png";
+        else file = "Door" + 1 + ".png";
         base = new TextureRegion(new Texture(Gdx.files.internal(file)), 0, 0, 95, 100);
 
     }
