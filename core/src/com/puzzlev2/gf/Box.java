@@ -23,13 +23,13 @@ public class Box extends Actor {
     private TextureRegion base;
     BitmapFont font;
 
-    public Box(int color, int load, float x, float y, int width, int height, int type) {
+    public Box(int color, int load, int strength, float x, float y, int width, int height, int type) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.strength = load;
-        this.load = 0;
+        this.load = load;
+        this.strength = strength;
         this.color = color;
         rectangle = new Rectangle(x, y, width, height);
         String file;

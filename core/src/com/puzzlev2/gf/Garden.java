@@ -123,7 +123,7 @@ public class Garden extends Actor {
                 float x = random.nextFloat() *(width - flowerWidth);
                 float y = random.nextFloat() * (height - flowerHeight);
 
-                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 90, x, y, flowerWidth, flowerHeight, 0);
+                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 90, 100, x, y, flowerWidth, flowerHeight, 0);
                 gboxes.addActor(b);
                 boxes.add(b);
             }
