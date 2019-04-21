@@ -152,7 +152,7 @@ public class Factory extends Actor {
 
     private void generate(int maxCount, int prob) {
         Random random = new Random();
-        maxCount = Math.max(maxCount, 15);
+        maxCount = Math.min(maxCount, 30);
 
         for (int i = 0; i < maxCount; i++) {
             if (random.nextInt(100) <= prob) {
