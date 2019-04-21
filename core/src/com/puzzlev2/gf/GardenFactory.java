@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
@@ -56,6 +57,8 @@ public class GardenFactory extends ApplicationAdapter {
         stage.addActor(player);
 
         fmorning = true;
+
+        batch.setColor(Color.BLACK);
     }
 
     @Override
@@ -149,8 +152,22 @@ public class GardenFactory extends ApplicationAdapter {
     public void drawTrack() {
         if (!coordSet.isEmpty()) {
             batch.begin();
+            Coordinate lastC = null;
+            int i =0;
+            ShapeRenderer shapeRenderer = new ShapeRenderer();
+
             for (Coordinate c : coordSet) {
-                batch.draw(tfmorning, c.x, c.y, 10, 10);
+                //batch.draw(tfmorning, c.getX(), c.getY(), 5, 5);
+
+                if(i != 0){
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                    shapeRenderer.setColor(Color.BLACK);
+                    Gdx.gl.glLineWidth(5);
+                    shapeRenderer.line(c.getX(),c.getY(),lastC.getX(),lastC.getY());
+                    shapeRenderer.end();
+                }
+                lastC = c;
+                i++;
             }
             batch.end();
         }
@@ -166,11 +183,13 @@ public class GardenFactory extends ApplicationAdapter {
                 }
             }
 
-            if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaX() != 0)) {
-                coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
+            if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0)) {
+
+                    coordSet.add(new Coordinate(Gdx.input.getX(), invertCoord(Gdx.input.getY())));
             }
 
-            System.out.println("X: " + Gdx.input.getX() + " Y:" + Gdx.input.getY() + " Length : " + coordSet.size());
+            System.out.println("X " + Gdx.input.getX() + " Y " + Gdx.input.getY() + " Length  " + coordSet.size()
+            + " DeltaX " + Gdx.input.getDeltaX() + " DeltaY " + Gdx.input.getDeltaY());
         } else coordSet.clear();
     }
 
@@ -185,4 +204,6 @@ public class GardenFactory extends ApplicationAdapter {
 
         return screenSize - coord;
     }
+
+
 }
