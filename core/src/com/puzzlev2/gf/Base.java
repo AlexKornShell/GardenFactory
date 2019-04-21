@@ -22,6 +22,7 @@ public class Base extends Actor {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = color;
         rectangle = new Rectangle(x, y, width, height);
         String file;
         if (type == 0) file = "hive" + color + ".png";

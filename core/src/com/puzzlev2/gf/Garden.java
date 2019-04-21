@@ -121,6 +121,7 @@ public class Garden extends Actor {
         int len = boxes.size();
         for (int i = 0; i < len; i++) {
             Box flower = boxes.get(i);
+            flower.load -= 20 * player.happiness / 100;
             if (flower.load <= 1f) {
                 gboxes.removeActor(flower);
                 boxes.remove(flower);
