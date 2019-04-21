@@ -155,8 +155,8 @@ public class Factory extends Actor {
 
         for (int i = 0; i < maxCount; i++) {
             if (random.nextInt(100) <= prob) {
-                int boxWidth = (int) (48 * 1.5f);
-                int boxHeight = (int) (28 * 1.5f);
+                int boxWidth = 48;
+                int boxHeight = 28;
 
                 float fieldWidth = width - 200;
                 float fieldHeight = height - 300;

@@ -51,7 +51,7 @@ public class GardenFactory extends ApplicationAdapter {
         tfevening = new Texture("tfevening.jpg");
         tgmorning = new Texture("tgmorning.jpg");
         tgarden = new Texture("fon-garden.png");
-        tgevening = new Texture("tfevening.jpg");
+        tgevening = new Texture("tgevening.jpg");
 
         coordBull = new ArrayList<Boolean>();
         coordSet = new ArrayList<ArrayList<Coordinate>>();
@@ -109,8 +109,8 @@ public class GardenFactory extends ApplicationAdapter {
                     }
                 }
             }
-            stage.draw();
             drawTrack();
+            stage.draw();
         } else if (fevening) {
             batch.begin();
             batch.draw(tfevening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -151,8 +151,8 @@ public class GardenFactory extends ApplicationAdapter {
                     gevening = true;
                 }
             }
-            stage.draw();
             drawTrack();
+            stage.draw();
         } else if (gevening) {
             batch.begin();
             batch.draw(tgevening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -173,13 +173,16 @@ public class GardenFactory extends ApplicationAdapter {
         if (!(coordSet.get(0).size() == 0) || !coordSet.get(1).isEmpty() || !coordSet.get(2).isEmpty()) {
             batch.begin();
             ShapeRenderer shapeRenderer = new ShapeRenderer();
-            for (ArrayList<Coordinate> cc : coordSet) {
+            for (int k = 0; k < player.factory.bases.size(); k++) {
+                ArrayList<Coordinate> cc = coordSet.get(k);
                 Coordinate lastC = null;
                 int i =0;
                 for (Coordinate c : cc) {
                     if(i != 0){
                         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                        shapeRenderer.setColor(Color.BLACK);
+                        if (k == 0) shapeRenderer.setColor(Color.YELLOW);
+                        else if (k == 1) shapeRenderer.setColor(Color.RED);
+                        else if (k == 2) shapeRenderer.setColor(Color.BLUE);
                         Gdx.gl.glLineWidth(5);
                         shapeRenderer.line(c.getX(),c.getY(),lastC.getX(),lastC.getY());
                         shapeRenderer.end();

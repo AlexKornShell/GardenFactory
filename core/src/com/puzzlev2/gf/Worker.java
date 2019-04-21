@@ -45,6 +45,7 @@ public class Worker extends Actor {
         else file = "worker" + color + ".png";
         base = new TextureRegion(new Texture(Gdx.files.internal(file)), 0, 0, width, height);
         font = new BitmapFont();
+        font.getData().setScale(2);
     }
 
     @Override

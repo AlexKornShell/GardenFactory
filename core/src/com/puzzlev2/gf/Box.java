@@ -37,6 +37,7 @@ public class Box extends Actor {
         else file = "box" + color + ".png";
         base = new TextureRegion(new Texture(Gdx.files.internal(file)), 0, 0, width, height);
         font = new BitmapFont();
+        font.getData().setScale(2);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Box extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(base, x, y, width / 2f, height / 2f, width, height, 1, 1, 0);
+        batch.draw(base, x, y, width / 2f, height / 2f, 1.5f * width, 1.5f * height, 1, 1, 0);
         font.draw(batch, "" + load + "/" + strength, x, y - 1);
     }
 
