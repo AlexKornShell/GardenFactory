@@ -29,6 +29,8 @@ public class GardenFactory extends ApplicationAdapter {
     boolean garden;
     boolean gevening;
 
+    boolean gameOver;
+
     Texture tfmorning;
     Texture tfevening;
     Texture tgmorning;
@@ -82,10 +84,15 @@ public class GardenFactory extends ApplicationAdapter {
             } else {
                 stage.act();
                 if (Gdx.input.justTouched()) {
+                    this.player.happiness += this.player.finishFactory();
                     isGenerating = true;
                     isDrawing = true;
                     factory = false;
                     fevening = true;
+                    if (player.happiness <= 0) {
+                        gameOver = true;
+                        fevening = false;
+                    }
                 }
             }
             stage.draw();
@@ -131,6 +138,10 @@ public class GardenFactory extends ApplicationAdapter {
                 gevening = false;
                 fmorning = true;
             }
+        } else if (gameOver) {
+            batch.begin();
+            batch.draw(tgevening,  Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+            batch.end();
         }
 
     }

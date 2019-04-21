@@ -55,4 +55,8 @@ public class Player extends Actor {
     public void factoryStep() {
         factory.updateState();
     }
+
+    public int finishFactory() {
+        return factory.finish();
+    }
 }

@@ -133,7 +133,20 @@ public class Factory extends Actor {
 //        int flowerCount = this.boxes.size();
 //        killFlowers();
 //        this.player.happiness *= flowerCount / this.boxes.size();
-        generate((int) Math.floor((double) 3 * this.player.happiness / 100), this.player.happiness);
+        this.boxes.clear();
+        this.gboxes.clear();
+        generate((int) Math.floor((double) 15 * this.player.happiness / 100), this.player.happiness);
+    }
+
+    public int finish() {
+        int delta = 0;
+        for (Worker worker : workers) {
+            delta -= 100 - worker.strength;
+        }
+        for (Box box: boxes) {
+            if (box.load == box.strength) delta += 10;
+        }
+        return delta;
     }
 
     private void generate(int maxCount, int prob) {
