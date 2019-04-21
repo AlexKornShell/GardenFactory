@@ -21,10 +21,6 @@ public class Garden extends Actor {
     private Group gworkers;
     private Player player;
 
-    private boolean isMoving;
-    private boolean isDrawing;
-
-
     public Garden(Player player, float width, float height) {
         this.width = width;
         this.height = height;
@@ -65,7 +61,6 @@ public class Garden extends Actor {
         for (Worker w : workers) {
             for (Box b : boxes) {
                 if (w.color == b.color && Intersector.overlaps(w.circle, b.rectangle)) {
-                    System.out.println(b.color + b.rectangle.getX());
                     float toLoad = b.strength - b.load;
                     if (toLoad > 0) {
                         if (toLoad <= w.load) {
@@ -160,7 +155,7 @@ public class Garden extends Actor {
                 float x = random.nextFloat() * (fieldWidth - flowerWidth) + 100;
                 float y = random.nextFloat() * (fieldHeight - flowerHeight) + 100;
 
-                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 10, 100, x, y, flowerWidth, flowerHeight, 0);
+                Box b = new Box(random.nextInt(this.player.openedColors) + 1, 10, 20, x, y, flowerWidth, flowerHeight, 0);
                 gboxes.addActor(b);
                 boxes.add(b);
             }

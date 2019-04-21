@@ -10,16 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GardenFactory extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
     Stage stage;
-    boolean drawTragect;
     boolean isDrawing;
     boolean isGenerating;
     Player player;
@@ -40,11 +35,8 @@ public class GardenFactory extends ApplicationAdapter {
     Texture tgarden;
     Texture tgevening;
 
-    boolean returned;
-
     ArrayList<ArrayList<Coordinate>> coordSet;
     ArrayList<Boolean> coordBull;
-    int p;
 
     @Override
     public void create() {
@@ -57,9 +49,9 @@ public class GardenFactory extends ApplicationAdapter {
         tfmorning = new Texture("tfmorning.jpg");
         tfactory = new Texture("fon-factory.png");
         tfevening = new Texture("tfevening.jpg");
-        tgmorning = new Texture("badlogic.jpg");
+        tgmorning = new Texture("tgmorning.jpg");
         tgarden = new Texture("fon-garden.png");
-        tgevening = new Texture("badlogic.jpg");
+        tgevening = new Texture("tfevening.jpg");
 
         coordBull = new ArrayList<Boolean>();
         coordSet = new ArrayList<ArrayList<Coordinate>>();
@@ -171,7 +163,7 @@ public class GardenFactory extends ApplicationAdapter {
             }
         } else if (gameOver) {
             batch.begin();
-            batch.draw(tgevening,  Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+            batch.draw(tgevening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             batch.end();
         }
 
@@ -205,7 +197,7 @@ public class GardenFactory extends ApplicationAdapter {
 
             for (int k = 0; k < player.factory.bases.size(); k++) {
                 if (player.factory.bases.get(k).rectangle.contains(Gdx.input.getX(), invertCoord(Gdx.input.getY())) && coordBull.get(k)) {
-                    if (!coordSet.get(k).isEmpty()) {
+                    if (coordSet.get(k).size() >= 10 && !coordSet.get(k).isEmpty()) {
                         player.setCoords(coordSet.get(k), k);
                         coordBull.set(k, false);
                         if (coordSet.get(0).size() >= 10 && coordSet.get(1).size() >= 10 && coordSet.get(2).size() >= 10) {
@@ -213,7 +205,7 @@ public class GardenFactory extends ApplicationAdapter {
                             isDrawing = false;
                         }
                     }
-                } else if (player.factory.bases.get(k).rectangle.contains(Gdx.input.getX(), invertCoord(Gdx.input.getY())) && !coordBull.get(k)) {
+                } else if (player.factory.bases.get(k).rectangle.contains(Gdx.input.getX(), invertCoord(Gdx.input.getY())) && !coordBull.get(k) && coordSet.get(k).isEmpty()) {
                     coordBull.set(k, true);
                 }
             }

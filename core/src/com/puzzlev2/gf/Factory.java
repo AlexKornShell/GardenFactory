@@ -61,7 +61,6 @@ public class Factory extends Actor {
         for (Worker w : workers) {
             for (Box b : boxes) {
                 if (w.color == b.color && Intersector.overlaps(w.circle, b.rectangle)) {
-                    System.out.println(b.color + b.rectangle.getX());
                     float toLoad = b.strength - b.load;
                     if (toLoad > 0) {
                         if (toLoad <= w.load) {

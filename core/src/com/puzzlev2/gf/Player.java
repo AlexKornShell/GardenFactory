@@ -44,7 +44,7 @@ public class Player extends Actor {
     }
 
     public void setCoords(ArrayList<Coordinate> coords, int k) {
-        if (isGarden) garden.workers.get(k).coords = coords;//sgarden.draw();
+        if (isGarden) garden.workers.get(k).coords = coords;
         else factory.workers.get(k).coords = coords;
     }
 
