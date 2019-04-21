@@ -28,18 +28,38 @@ public class Factory extends Actor {
         bases = new ArrayList<Base>();
         boxes = new ArrayList<Box>();
         workers = new ArrayList<Worker>();
-        Worker worker = new Worker(20, 20, 28, 42, 21, 100, 1, 1);
-        workers.add(worker);
 
         gbases = new Group();
         gboxes = new Group();
         gworkers = new Group();
 
-        Base base = new Base(width / 2f - (95 / 2f), 0, 95, 100, 1, 1);
-        bases.add(base);
-        gworkers.addActor(base);
-
-        gworkers.addActor(worker);
+        for (int i = 1; i <= this.player.openedColors; i++) {
+            int x, y;
+            switch (i) {
+                case (1):
+                    x = (int) (width / 2f - (95 / 2f));
+                    y = 0;
+                    break;
+                case (2):
+                    x = 0;
+                    y = (int) (height / 2f - (100 / 2f));
+                    break;
+                case (3):
+                    x = (int) (width - 95);
+                    y = (int) (height / 2f - (100 / 2f));
+                    break;
+                default:
+                    x = 0;
+                    y = 0;
+                    break;
+            }
+            Worker worker = new Worker(x, y, 28, 42, 21, 100,  i, 1);
+            Base base = new Base(x, y, 95, 100, i, 1);
+            workers.add(worker);
+            gworkers.addActor(worker);
+            bases.add(base);
+            gbases.addActor(base);
+        }
 
         this.generate(10, 100);
     }
